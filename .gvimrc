@@ -65,7 +65,9 @@ endif
 " カラー設定:
 "colorscheme morning
 "colorscheme macvim
+" 画面を黒地に白にする (次行の先頭の " を削除すれば有効になる)
 colorscheme evening " (GUI使用時)
+"colorscheme seoul256¬
 
 "---------------------------------------------------------------------------
 " フォント設定:
@@ -128,8 +130,6 @@ set columns=120
 set lines=40
 " コマンドラインの高さ(GUI使用時)
 set cmdheight=2
-" 画面を黒地に白にする (次行の先頭の " を削除すれば有効になる)
-"colorscheme evening " (GUI使用時)
 "行番号を表示する
 set number
 "---------------------------------------------------------------------------

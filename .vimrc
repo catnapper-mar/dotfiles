@@ -26,6 +26,16 @@ NeoBundle 'grep.vim'
 NeoBundle 'Shougo/unite.vim'
 " カラースキームプラグイン
 NeoBundle 'junegunn/seoul256.vim'
+" Markdown用プラグイン
+NeoBundle 'tpope/vim-markdown'
+" Markdown previewプラグイン
+NeoBundle 'kannokanno/previm'
+" フォントサイズ変更プラグイン
+" NeoBundle 'thinca/vim-fontzoom'
+" URLエンコード
+NeoBundle 'koron/chalice'
+" ダイジェスト、乱数生成
+NeoBundle 'ynkdir/vim-funlib'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
  
@@ -60,7 +70,8 @@ set smartcase
 " タブの画面上での幅
 set tabstop=2
 " タブをスペースに展開しない (expandtab:展開する)
-set noexpandtab
+" set noexpandtab
+set expandtab
 " 自動的にインデントする (noautoindent:インデントしない)
 set autoindent
 " バックスペースでインデントや改行を削除できるようにする
@@ -77,8 +88,8 @@ set formatoptions+=mM
 "---------------------------------------------------------------------------
 " GUI固有ではない画面表示の設定:
 "
-" 行番号を非表示 (number:表示)
-set nonumber
+" 行番号を表示 (number:表示)
+set number
 " ルーラーを表示 (noruler:非表示)
 set ruler
 " タブや改行を表示 (list:表示)
@@ -97,6 +108,7 @@ set showcmd
 set title
 " 画面を黒地に白にする (次行の先頭の " を削除すれば有効になる)
 "colorscheme evening " (Windows用gvim使用時はgvimrcを編集すること)
+colorscheme seoul256
 "全角記号が半角にならないようにする
 set ambiwidth=double
 " エスケープシーケンスの表示 tab eol
@@ -106,13 +118,15 @@ set listchars=tab:▸\ ,eol:¬
 nnoremap <ESC><ESC> :nohlsearch<CR>
 " 閉括弧が入力された時、対応する括弧を強調する
 set showmatch
+" シンタックスハイライト
+syntax on
+
 
 "---------------------------------------------------------------------------
 " ファイル操作に関する設定:
 "
 " バックアップファイルを作成しない (次行の先頭の " を削除すれば有効になる)
 "set nobackup
-
 
 "---------------------------------------------------------------------------
 " ファイル名に大文字小文字の区別がないシステム用の設定:
@@ -124,3 +138,17 @@ if filereadable($VIM . '/vimrc') && filereadable($VIM . '/ViMrC')
 endif
 
 "---------------------------------------------------------------------------
+" URLエンコード/デコードコマンド定義（動かない）
+function s:URLEncode()
+		let l:line = getline('.')
+		let l:encoded = AL_urlencode(l:line)
+		call setline('.', l:encoded)
+endfunction
+function s:URLDecode()
+		let l:line = getline('.')
+		let l:encoded = AL_urldecode(l:line)
+		call setline('.', l:encoded)
+endfunction
+command! -nargs=0 -range URLEncode :<line1>,<line2>call <SID>URLEncode()
+command! -nargs=0 -range URLDecode :<line1>,<line2>call <SID>URLDecode()
+
